@@ -16,22 +16,34 @@ if ( !defined( 'ABSPATH' ) ) {
     exit;
 }
 
-// require_once __DIR__ . "/functions.php";
-// require_once __DIR__ . "/update-order-status.php";
-
+/**
+ * Plugin Main Class
+ */
 final class damage_claim {
 
+    /**
+     * Order Details Poperty
+     *
+     * @var array
+     */
     public $order_details = [];
 
+    /**
+     * Plugin Constructor
+     */
     public function __construct() {
 
         add_action('init', [$this, 'hoodsly_order_scripts']);
         add_action('admin_enqueue_scripts', [$this, 'damage_claim_assets_loader'] ); 
         add_action('wp_enqueue_scripts', [$this, 'damage_claim_assets_loader'] ); 
         
-        
     }
 
+    /**
+     * Plugin Hooks handaler
+     *
+     * @return void
+     */
     public function hoodsly_order_scripts() {
         add_filter( 'gform_pre_render_1', [$this, 'my_orders'] );
         if ( is_user_logged_in() ){
@@ -42,6 +54,11 @@ final class damage_claim {
         }
     }
 
+    /**
+     * G form invisible method if user not login
+     *
+     * @return void
+     */
     public function damage_g_form_style() {
         ?>
         <style>
@@ -55,6 +72,11 @@ final class damage_claim {
         <?php
     }
 
+    /**
+     * Plugin Assets loader
+     *
+     * @return void
+     */
     function damage_claim_assets_loader() {
 
         wp_enqueue_script( 'damage-claim-ajax', plugins_url('', __FILE__)."/assets/ajax.js", ['jquery'], time(), true );
@@ -73,6 +95,12 @@ final class damage_claim {
         wp_enqueue_script( 'damage-claim-select', plugins_url('', __FILE__)."/lib/select2.min.js", ['jquery'], time(), true );
     }
 
+    /**
+     * Form Handaler
+     *
+     * @param [type] $form
+     * @return void
+     */
     public function my_orders( $form ) {
         if ( is_user_logged_in() ){
             $user_id = get_current_user_id(); // current user ID here for example
@@ -115,6 +143,14 @@ final class damage_claim {
       
     }
 
+    /**
+     * Get Order Items details
+     * 
+     * Ajax Function
+     *
+     * @param [type] $order_id
+     * @return void
+     */
     public function order_item_details( $order_id ) {
 
             $order_id = isset($_POST['order_id']) ? $_POST['order_id'] : '';
