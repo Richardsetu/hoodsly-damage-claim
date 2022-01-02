@@ -22,7 +22,7 @@ if ( !defined( 'ABSPATH' ) ) {
 final class damage_claim {
 
     /**
-     * Order Details Poperty
+     * Order Details Property
      *
      * @var array
      */
@@ -40,7 +40,7 @@ final class damage_claim {
     }
 
     /**
-     * Plugin Hooks handaler
+     * Plugin Hooks handler
      *
      * @return void
      */
@@ -52,24 +52,6 @@ final class damage_claim {
         } else {
             add_action('wp_head', [$this, 'damage_g_form_style']);
         }
-    }
-
-    /**
-     * G form invisible method if user not login
-     *
-     * @return void
-     */
-    public function damage_g_form_style() {
-        ?>
-        <style>
-            #gform_1{
-                display: none;
-            }
-            .uael-gf-style, .uael-gf-form-title{
-                text-align: center !important;
-            }
-        </style>
-        <?php
     }
 
     /**
@@ -96,7 +78,7 @@ final class damage_claim {
     }
 
     /**
-     * Form Handaler
+     * Form Handler
      *
      * @param [type] $form
      * @return void
@@ -144,6 +126,24 @@ final class damage_claim {
     }
 
     /**
+     * G form invisible method if user not login
+     *
+     * @return void
+     */
+    public function damage_g_form_style() {
+        ?>
+        <style>
+            #gform_1{
+                display: none;
+            }
+            .uael-gf-style, .uael-gf-form-title{
+                text-align: center !important;
+            }
+        </style>
+        <?php
+    }
+
+    /**
      * Get Order Items details
      * 
      * Ajax Function
@@ -170,10 +170,7 @@ final class damage_claim {
             }
             echo json_encode($this->order_details);
             exit;
-
     }
-
-
 }
 
 new damage_claim;
